@@ -1,0 +1,25 @@
+{
+  "name": "udacity_supplychain",
+  "version": "1.0.0",
+  "description": "This repository holds, at this stage, ULM diagrams that will provide a starting point for building a blockchain-based supply chain solution for the lumber industry. We will build an application using the Ethereum blockchain for storage of data and smart contract functionality that can be used to track and transfer ownership of lumber and lumber products when moving along the supply chain from harvester all the way to the end consumer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvdhout/Udacity_SupplyChain.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvdhout/Udacity_SupplyChain/issues"
+  },
+  "homepage": "https://github.com/vvdhout/Udacity_SupplyChain#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "openzeppelin-solidity": "^2.1.2",
+    "truffle-hdwallet-provider": "^1.0.4"
+  }
+}
