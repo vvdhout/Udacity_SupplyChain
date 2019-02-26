@@ -1,6 +1,9 @@
 pragma solidity ^0.5.1;
+
+import '../AccessControl/AccessControl.sol';
+
 // Define a contract 'Supplychain'
-contract SupplyChain {
+contract SupplyChain is AccessControl {
 
   // Define 'owner'
   address payable owner;
@@ -275,7 +278,7 @@ contract SupplyChain {
     newItem.itemState2 = MaterialState.Lumber;
     
     // Add item to mapping using UFC
-    items[upc] = newItem;
+    items[_upc] = newItem;
     
     // Increment sku
     sku = sku + 1;
