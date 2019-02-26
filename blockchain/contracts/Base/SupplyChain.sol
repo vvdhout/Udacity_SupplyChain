@@ -66,6 +66,7 @@ contract SupplyChain {
     State   itemState;  // Product State as represented in the enum above
     MaterialState itemState2; // Material State of the product as represented by the enum above
     address payable manufacturerID; // Metamask-Ethereum address of the Manufacturer
+    string  productNotesByManufacturer; // Product notes that are added by the Manufacturer
     address payable distributorID;  // Metamask-Ethereum address of the Distributor
     address payable retailerID; // Metamask-Ethereum address of the Retailer
     address payable consumerID; // Metamask-Ethereum address of the Consumer
@@ -364,31 +365,223 @@ contract SupplyChain {
     emit Shipped(_upc);
   }
 
-  // Define a function 'receiveItem' that allows the retailer to mark an item 'Received'
+  // Define a function 'receiveItem' that allows the manufacturer to mark an item 'Received'
   // Use the above modifiers to check if the item is shipped
   function receiveItem(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
-    
+    shipped(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
+    verifyCaller(items[_upc].manufacturerID)
     {
     // Update the appropriate fields - ownerID, retailerID, itemState
+    items[_upc].itemState = State.Received;
     
     // Emit the appropriate event
+    emit Received(_upc); 
+  }
+  
+  // Manufacture the item y mananufacturer
+  function manufactureProduct(uint _upc) public
+  // Call modifier to check if upc has passed previous supply chain stage
+  received(_upc)
+  // Verify manufacturer
+  verifyCaller(items[_upc].ownerID)
+  {
+      // Change item states accordingly
+      items[_upc].itemState = State.Manufactured;
+      items[_upc].itemState2 = MaterialState.Product;
+      
+      // Emit event
+      emit Manufactured(_upc);
+  }
+  
+  // Define a function 'packItem' that allows a farmer to mark an item 'Packed'
+  function packageProduct(uint _upc) public 
+  // Call modifier to check if upc has passed previous supply chain stage
+  manufactured(_upc)
+  // Call modifier to verify caller of this function
+  verifyCaller(items[_upc].ownerID)
+  {
+    // Update the appropriate fields
+    items[_upc].itemState = State.PackagedByManufacturer;
+
+    // Emit the appropriate event
+    emit PackagedByManufacturer(_upc);
+  }
+  
+ 
+  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  function sellProductByManfacturer(uint _upc, uint _price) public 
+  // Call modifier to check if upc has passed previous supply chain stage
+  packagedByManufacturer(_upc)
+  // Call modifier to verify caller of this function
+  verifyCaller(items[_upc].ownerID)
+  {
+    // Update the appropriate fields
+    items[_upc].productPrice = _price;
+    items[_upc].itemState = State.ForSaleByManufacturer;
+
+    // Emit the appropriate event
+    emit ForSaleByManufacturer(_upc);
+  }
+
+  // Define a function 'buyItem' that allows the disributor to mark an item 'Sold'
+  // Use the above defined modifiers to check if the item is available for sale, if the buyer has paid enough, 
+  // and any excess ether sent is refunded back to the buyer
+  function buyProductByDistributor(uint _upc) public payable 
+    // Call modifier to check if upc has passed previous supply chain stage
+    forSaleByManufacturer(_upc)
+    // Call modifer to check if buyer has paid enough
+    paidEnough(items[_upc].productPrice)
+    // Call modifer to send any excess ether back to buyer
+    checkValue(_upc)
+    {
     
+    // Update the appropriate fields - ownerID, distributorID, itemState
+    items[_upc].ownerID = msg.sender;
+    items[_upc].distributorID = msg.sender;
+    items[_upc].itemState = State.SoldByManufacturer;
+    // Transfer money to farmer
+    items[_upc].manufacturerID.transfer(items[_upc].productPrice);
+    // emit the appropriate event
+    emit SoldByManufacturer(_upc);
+  }
+
+  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Use the above modifers to check if the item is sold
+  function shipProductByManufacturer(uint _upc) public 
+    // Call modifier to check if upc has passed previous supply chain stage
+    soldByManufacturer(_upc)
+    // Call modifier to verify caller of this function
+    verifyCaller(items[_upc].manufacturerID)
+    {
+    // Update the appropriate fields
+    items[_upc].itemState = State.ShippedByManufacturer;
+    
+    // Emit the appropriate event
+    emit ShippedByManufacturer(_upc);
+  }
+  
+  
+  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  function sellProductByDistributor(uint _upc, uint _price) public 
+  // Call modifier to check if upc has passed previous supply chain stage
+  shippedByManufacturer(_upc)
+  // Call modifier to verify caller of this function
+  verifyCaller(items[_upc].ownerID)
+  {
+    // Update the appropriate fields
+    items[_upc].productPrice = _price;
+    items[_upc].itemState = State.ForSaleByDistributor;
+
+    // Emit the appropriate event
+    emit ForSaleByDistributor(_upc);
+  }
+
+  // Define a function 'buyItem' that allows the disributor to mark an item 'Sold'
+  // Use the above defined modifiers to check if the item is available for sale, if the buyer has paid enough, 
+  // and any excess ether sent is refunded back to the buyer
+  function buyProductByRetailer(uint _upc) public payable 
+    // Call modifier to check if upc has passed previous supply chain stage
+    forSaleByDistributor(_upc)
+    // Call modifer to check if buyer has paid enough
+    paidEnough(items[_upc].productPrice)
+    // Call modifer to send any excess ether back to buyer
+    checkValue(_upc)
+    {
+    
+    // Update the appropriate fields - ownerID, distributorID, itemState
+    items[_upc].ownerID = msg.sender;
+    items[_upc].retailerID = msg.sender;
+    items[_upc].itemState = State.SoldByDistributor;
+    // Transfer money to farmer
+    items[_upc].distributorID.transfer(items[_upc].productPrice);
+    // emit the appropriate event
+    emit SoldByDistributor(_upc);
+  }
+
+  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Use the above modifers to check if the item is sold
+  function shipProductByDistributor(uint _upc) public 
+    // Call modifier to check if upc has passed previous supply chain stage
+    soldByDistributor(_upc)
+    // Call modifier to verify caller of this function
+    verifyCaller(items[_upc].distributorID)
+    {
+    // Update the appropriate fields
+    items[_upc].itemState = State.ShippedByDistributor;
+    
+    // Emit the appropriate event
+    emit ShippedByDistributor(_upc);
+  }
+  
+  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  function sellProductByRetailer(uint _upc, uint _price) public 
+  // Call modifier to check if upc has passed previous supply chain stage
+  shippedByDistributor(_upc)
+  // Call modifier to verify caller of this function
+  verifyCaller(items[_upc].ownerID)
+  {
+    // Update the appropriate fields
+    items[_upc].productPrice = _price;
+    items[_upc].itemState = State.ForSaleByRetailer;
+
+    // Emit the appropriate event
+    emit ForSaleByRetailer(_upc);
   }
 
   // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
   // Use the above modifiers to check if the item is received
-  function purchaseItem(uint _upc) public 
+  function purchase(uint _upc) public payable
     // Call modifier to check if upc has passed previous supply chain stage
-    
+    forSaleByRetailer(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
+    // Call modifer to check if buyer has paid enough
+    paidEnough(items[_upc].productPrice)
+    // Call modifer to send any excess ether back to buyer
+    checkValue(_upc)
     {
-    // Update the appropriate fields - ownerID, consumerID, itemState
-    
-    // Emit the appropriate event
+   // Update the appropriate fields - ownerID, distributorID, itemState
+    items[_upc].ownerID = msg.sender;
+    items[_upc].consumerID = msg.sender;
+    items[_upc].itemState = State.Purchased;
+    // Transfer money to farmer
+    items[_upc].retailerID.transfer(items[_upc].productPrice);
+    // emit the appropriate event
+    emit Purchased(_upc);
     
   }
+  
+  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Use the above modifers to check if the item is sold
+  function shipProductByRetailer(uint _upc) public 
+    // Call modifier to check if upc has passed previous supply chain stage
+    purchased(_upc)
+    // Call modifier to verify caller of this function
+    verifyCaller(items[_upc].retailerID)
+    {
+    // Update the appropriate fields
+    items[_upc].itemState = State.ShippedByRetailer;
+    
+    // Emit the appropriate event
+    emit ShippedByRetailer(_upc);
+  }
+  
+  // Define a function 'receiveItem' that allows the manufacturer to mark an item 'Received'
+  // Use the above modifiers to check if the item is shipped
+  function receiveProduct(uint _upc) public 
+    // Call modifier to check if upc has passed previous supply chain stage
+    shippedByRetailer(_upc)
+    // Access Control List enforced by calling Smart Contract / DApp
+    verifyCaller(items[_upc].ownerID)
+    {
+    // Update the appropriate fields - ownerID, retailerID, itemState
+    items[_upc].itemState = State.ReceivedByConsumer;
+    
+    // Emit the appropriate event
+    emit ReceivedByConsumer(_upc); 
+  }
+  
 
   // Define a function 'fetchItemBufferOne' that fetches the data
   function fetchItemBufferOne(uint _upc) public view returns 
