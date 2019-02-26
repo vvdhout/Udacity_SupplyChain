@@ -261,7 +261,7 @@ contract SupplyChain is AccessControl {
   // onlyHarvester()
   {
     // Require that the UPC does not already exist
-    require(_upc != 0 || items[_upc].upc == 0, "This UPC already exists.");
+    require(_upc != 0 && items[_upc].upc == 0, "This UPC already exists.");
     // Add the new item as part of Harvest
     Item memory newItem;
     newItem.sku = sku;
@@ -592,11 +592,11 @@ contract SupplyChain is AccessControl {
   uint    itemSKU,
   uint    itemUPC,
   address ownerID,
-  address originFarmerID,
-  string memory originFarmName,
-  string memory originFarmInformation,
-  string memory originFarmLatitude,
-  string memory originFarmLongitude
+  address originHarvesterID,
+  string memory originHarvesterName,
+  string memory originHarvesterInformation,
+  string memory originHarvesterLatitude,
+  string memory originHarvesterLongitude
   ) 
   {
   // Assign values to the 8 parameters
