@@ -1,0 +1,141 @@
+<DOCTYPE! html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width">
+  <meta charset="utf-8">
+
+  <title>Retailer - Lumber Supply Chain Operations</title>
+  <meta name="description" content="Manage supply chain functionality of the Lumber Supply Chain Blockchain Solution that we build for Udacity.">
+
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+  <!-- Provide jQuery framework -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <style>
+  body {
+  font-family: Calibri;
+  background-color: lightblue;
+  }
+
+  .container {
+  padding: 20px 5%;
+  }
+
+  .container .nav ul {
+    list-style: none;
+  }
+
+  .container .nav li {
+    display: inline-block;
+    margin-right: 45px;
+  }
+
+  .container div:not(.nav) {
+  width: 48%;
+    padding: 20px;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  form {
+    
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 7px 12px;
+    margin: 10px 5px;
+  }
+  </style>
+
+</head>
+
+<body>
+
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+<div class="container">
+
+<div class="nav">
+  <ul>
+    <a href="/harvester/"><li>Harvester</li></a>
+    <a href="/manufacturer/"><li>Manufacturer</li></a>
+    <a href="/distributor/"><li>Distributor</li></a>
+    <a href="/retailer/"><li>Retailer</li></a>
+    <a href="/consumer/"><li>Consumer</li></a>
+  </ul>
+</div>
+
+<h1>Retailer</h1>
+
+<div>
+<form>
+<h3>Buy</h3>
+<input type="text" name="" class="upc" placeholder="upc">
+<input type="submit" name="" id="buySubmit">
+</form>
+
+<form>
+<h3>Sell</h3>
+<input type="text" name="" class="upc" placeholder="upc">
+<input type="submit" name="" id="sellSubmit">
+</form>
+
+<form>
+<h3>Ship</h3>
+<input type="text" name="" class="upc" placeholder="upc">
+<input type="submit" name="" id="shipSubmit">
+</form>
+</div>
+
+</div>
+
+</body>
+
+<!-- Provide Web3 framework -->
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+
+<script>
+
+// Connect to Ethereum Network/Blockchain
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+  console.log('We already have a provider.');
+} else {
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545")); 
+  console.log('We have set a new provider on Ganache chain at localhost:8454');
+}
+
+// Set the default account
+web3.eth.defaultAccount = web3.eth.accounts[0];
+console.log('Default account: ' + web3.eth.defaultAccount);
+
+// Provide the ABI to interact with the smart contract
+const PHBaconContract = web3.eth.contract();
+
+// Connect to the smart contract by providing its ethereum address
+const PHBacon = PHBaconContract.at('address');
+
+/* ============================================================================================================================
+=========== Starting actual functionality =====================================================================================
+============================================================================================================================ */
+
+
+// Get fund balance and convert to ETH with 3 decimals
+const getFunds = () => { PHBacon.getFundBalance(function(error, result) {
+  if (error) {
+    return error;
+  } else {
+    $('#fundBalance').text(Math.round((result/1000000000000000000)*10000)/10000);
+  }
+})};
+
+</script>
+
+</html>

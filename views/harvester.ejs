@@ -25,7 +25,16 @@
   padding: 20px 5%;
   }
 
-  .container div {
+  .container .nav ul {
+    list-style: none;
+  }
+
+  .container .nav li {
+    display: inline-block;
+    margin-right: 45px;
+  }
+
+  .container div:not(.nav) {
   width: 48%;
     padding: 20px;
     box-sizing: border-box;
@@ -52,6 +61,16 @@
 <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
 <div class="container">
+
+<div class="nav">
+  <ul>
+    <a href="/harvester/"><li>Harvester</li></a>
+    <a href="/manufacturer/"><li>Manufacturer</li></a>
+    <a href="/distributor/"><li>Distributor</li></a>
+    <a href="/retailer/"><li>Retailer</li></a>
+    <a href="/consumer/"><li>Consumer</li></a>
+  </ul>
+</div>
 
 <h1>Harvester</h1>
 
