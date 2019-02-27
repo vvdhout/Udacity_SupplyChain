@@ -387,7 +387,7 @@ contract SupplyChain is AccessControl, Ownable {
   }
   
   // Manufacture the item y mananufacturer
-  function manufactureProduct(uint _upc) public
+  function manufactureProduct(uint _upc, string memory _manufacturerNotes) public
   // Call modifier to check if upc has passed previous supply chain stage
   received(_upc)
   // Only manufacturer 
@@ -398,6 +398,7 @@ contract SupplyChain is AccessControl, Ownable {
       // Change item states accordingly
       items[_upc].itemState = State.Manufactured;
       items[_upc].itemState2 = MaterialState.Product;
+      items[_upc].productNotesByManufacturer = _manufacturerNotes;
       
       // Emit event
       emit Manufactured(_upc);
@@ -653,6 +654,7 @@ contract SupplyChain is AccessControl, Ownable {
   uint    productPrice,
   State   itemState,
   MaterialState    itemState2,
+  address payable manufacturerID,
   address payable distributorID,
   address payable retailerID,
   address payable consumerID
@@ -671,6 +673,7 @@ contract SupplyChain is AccessControl, Ownable {
   returnItem.productPrice,
   returnItem.itemState,
   returnItem.itemState2,
+  returnItem.manufacturerID,
   returnItem.distributorID,
   returnItem.retailerID,
   returnItem.consumerID
