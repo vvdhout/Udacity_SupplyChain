@@ -1,12 +1,10 @@
 pragma solidity ^0.5.1;
 
 import '../AccessControl/AccessControl.sol';
+import '../Core/Ownable.sol';
 
 // Define a contract 'Supplychain'
-contract SupplyChain is AccessControl {
-
-  // Define 'owner'
-  address payable owner;
+contract SupplyChain is AccessControl, Ownable {
 
   // Define a variable called 'upc' for Universal Product Code (UPC)
   uint  upc;
@@ -95,12 +93,6 @@ contract SupplyChain is AccessControl {
     event Purchased (uint upc);                
     event ShippedByRetailer (uint upc);          
     event ReceivedByConsumer (uint upc);                     
-
-  // Define a modifer that checks to see if msg.sender == owner of the contract
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-  }
 
   // Define a modifer that verifies the Caller
   modifier verifyCaller (address _address) {
@@ -241,15 +233,14 @@ contract SupplyChain is AccessControl {
   // and set 'sku' to 1
   // and set 'upc' to 1
   constructor() public payable {
-    owner = msg.sender;
     sku = 1;
     upc = 1;
   }
 
   // Define a function 'kill' if required
   function kill() public {
-    if (msg.sender == owner) {
-      selfdestruct(owner);
+    if (msg.sender == owner()) {
+      selfdestruct(msg.sender);
     }
   }
   
@@ -258,7 +249,7 @@ contract SupplyChain is AccessControl {
   function harvestItem(uint _upc, address _originHarvesterID, string memory _originHarvesterName, string memory _originHarvesterInformation, string memory _originHarvesterLatitude, string  memory _originHarvesterLongitude, string memory _productNotes) public 
   
   verifyCaller(_originHarvesterID) //VerifyCaller 
-  // onlyHarvester()
+  onlyHarvester() // onlyHarvester()
   {
     // Require that the UPC does not already exist
     require(_upc != 0 && items[_upc].upc == 0, "This UPC already exists.");
@@ -294,6 +285,8 @@ contract SupplyChain is AccessControl {
   harvested(_upc)
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].originHarvesterID)
+  // Only harvester can process 
+  onlyHarvester()
   {
     // Update the appropriate fields
     items[_upc].itemState = State.Processed;
@@ -306,6 +299,8 @@ contract SupplyChain is AccessControl {
   function packageItem(uint _upc) public 
   // Call modifier to check if upc has passed previous supply chain stage
   processed(_upc)
+  // Only harvester
+  onlyHarvester()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].originHarvesterID)
   {
@@ -320,6 +315,8 @@ contract SupplyChain is AccessControl {
   function sellItem(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   packaged(_upc)
+  // Only harvester
+  onlyHarvester()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].originHarvesterID)
   {
@@ -337,6 +334,8 @@ contract SupplyChain is AccessControl {
   function buyItem(uint _upc) public payable 
     // Call modifier to check if upc has passed previous supply chain stage
     forSale(_upc)
+    // Only manufacturer
+    onlyManufacturer()
     // Call modifer to check if buyer has paid enough
     paidEnough(items[_upc].productPrice)
     // Call modifer to send any excess ether back to buyer
@@ -358,6 +357,8 @@ contract SupplyChain is AccessControl {
   function shipItem(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     sold(_upc)
+    // Only harvester
+    onlyHarvester()
     // Call modifier to verify caller of this function
     verifyCaller(items[_upc].originHarvesterID)
     {
@@ -373,6 +374,8 @@ contract SupplyChain is AccessControl {
   function receiveItem(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     shipped(_upc)
+    // Only manufacturer 
+    onlyManufacturer()
     // Access Control List enforced by calling Smart Contract / DApp
     verifyCaller(items[_upc].manufacturerID)
     {
@@ -387,6 +390,8 @@ contract SupplyChain is AccessControl {
   function manufactureProduct(uint _upc) public
   // Call modifier to check if upc has passed previous supply chain stage
   received(_upc)
+  // Only manufacturer 
+    onlyManufacturer()
   // Verify manufacturer
   verifyCaller(items[_upc].ownerID)
   {
@@ -402,6 +407,8 @@ contract SupplyChain is AccessControl {
   function packageProduct(uint _upc) public 
   // Call modifier to check if upc has passed previous supply chain stage
   manufactured(_upc)
+  // Only manufacturer 
+    onlyManufacturer()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].ownerID)
   {
@@ -417,6 +424,8 @@ contract SupplyChain is AccessControl {
   function sellProductByManfacturer(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   packagedByManufacturer(_upc)
+  // Only manufacturer 
+    onlyManufacturer()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].ownerID)
   {
@@ -434,6 +443,8 @@ contract SupplyChain is AccessControl {
   function buyProductByDistributor(uint _upc) public payable 
     // Call modifier to check if upc has passed previous supply chain stage
     forSaleByManufacturer(_upc)
+    // Only distributor
+    onlyDistributor()
     // Call modifer to check if buyer has paid enough
     paidEnough(items[_upc].productPrice)
     // Call modifer to send any excess ether back to buyer
@@ -455,6 +466,8 @@ contract SupplyChain is AccessControl {
   function shipProductByManufacturer(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     soldByManufacturer(_upc)
+    // Only manufacturer 
+    onlyManufacturer()
     // Call modifier to verify caller of this function
     verifyCaller(items[_upc].manufacturerID)
     {
@@ -470,6 +483,8 @@ contract SupplyChain is AccessControl {
   function sellProductByDistributor(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   shippedByManufacturer(_upc)
+  // Only distributor
+    onlyDistributor()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].ownerID)
   {
@@ -487,6 +502,8 @@ contract SupplyChain is AccessControl {
   function buyProductByRetailer(uint _upc) public payable 
     // Call modifier to check if upc has passed previous supply chain stage
     forSaleByDistributor(_upc)
+    // Only Retailer
+    onlyRetailer()
     // Call modifer to check if buyer has paid enough
     paidEnough(items[_upc].productPrice)
     // Call modifer to send any excess ether back to buyer
@@ -508,6 +525,8 @@ contract SupplyChain is AccessControl {
   function shipProductByDistributor(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     soldByDistributor(_upc)
+    // Only distributor
+    onlyDistributor()
     // Call modifier to verify caller of this function
     verifyCaller(items[_upc].distributorID)
     {
@@ -522,6 +541,8 @@ contract SupplyChain is AccessControl {
   function sellProductByRetailer(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   shippedByDistributor(_upc)
+  // Only Retailer
+    onlyRetailer()
   // Call modifier to verify caller of this function
   verifyCaller(items[_upc].ownerID)
   {
@@ -538,6 +559,8 @@ contract SupplyChain is AccessControl {
   function purchase(uint _upc) public payable
     // Call modifier to check if upc has passed previous supply chain stage
     forSaleByRetailer(_upc)
+    // Only consumer 
+    onlyConsumer()
     // Access Control List enforced by calling Smart Contract / DApp
     // Call modifer to check if buyer has paid enough
     paidEnough(items[_upc].productPrice)
@@ -560,6 +583,8 @@ contract SupplyChain is AccessControl {
   function shipProductByRetailer(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     purchased(_upc)
+    // Only Retailer
+    onlyRetailer()
     // Call modifier to verify caller of this function
     verifyCaller(items[_upc].retailerID)
     {
@@ -575,6 +600,8 @@ contract SupplyChain is AccessControl {
   function receiveProduct(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
     shippedByRetailer(_upc)
+    // Only consumer 
+    onlyConsumer()
     // Access Control List enforced by calling Smart Contract / DApp
     verifyCaller(items[_upc].ownerID)
     {
