@@ -111,7 +111,7 @@ contract SupplyChain is AccessControl, Ownable {
     _;
     uint _price = items[_upc].productPrice;
     uint amountToReturn = msg.value - _price;
-    items[_upc].consumerID.transfer(amountToReturn);
+    items[_upc].ownerID.transfer(amountToReturn);
   }
 
   // Define a modifier that checks if an item.state of a upc is Harvested
@@ -422,7 +422,7 @@ contract SupplyChain is AccessControl, Ownable {
   
  
   // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
-  function sellProductByManfacturer(uint _upc, uint _price) public 
+  function sellProductByManufacturer(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   packagedByManufacturer(_upc)
   // Only manufacturer 
