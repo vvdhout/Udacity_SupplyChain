@@ -5,8 +5,7 @@
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "constructor",
-      "signature": "constructor"
+      "type": "constructor"
     },
     {
       "anonymous": false,
@@ -18,8 +17,7 @@
         }
       ],
       "name": "ConsumerAdded",
-      "type": "event",
-      "signature": "0x28b26e7a3d20aedbc5f8f2ebf7da671c0491723a2b78f47a097b0e46dee07142"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -31,8 +29,7 @@
         }
       ],
       "name": "ConsumerRemoved",
-      "type": "event",
-      "signature": "0xe3f5ed5f263f1f01764a96edfc7d025f511ec5f7d180e8816908b78bcf74f098"
+      "type": "event"
     },
     {
       "constant": true,
@@ -51,8 +48,7 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0x834ff739"
+      "type": "function"
     },
     {
       "constant": false,
@@ -66,8 +62,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x112940f9"
+      "type": "function"
     },
     {
       "constant": false,
@@ -76,8 +71,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x61e6982d"
+      "type": "function"
     }
   ],
   "bytecode": "0x608060405234801561001057600080fd5b506100293361002e640100000000026401000000009004565b6101e8565b61004f816000610095640100000000026102b7179091906401000000009004565b8073ffffffffffffffffffffffffffffffffffffffff167f28b26e7a3d20aedbc5f8f2ebf7da671c0491723a2b78f47a097b0e46dee0714260405160405180910390a250565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156100d157600080fd5b6100ea8282610154640100000000026401000000009004565b1515156100f657600080fd5b60018260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050565b60008073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff161415151561019157600080fd5b8260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b610442806101f76000396000f3fe608060405260043610610051576000357c010000000000000000000000000000000000000000000000000000000090048063112940f91461005657806361e6982d146100a7578063834ff739146100be575b600080fd5b34801561006257600080fd5b506100a56004803603602081101561007957600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610127565b005b3480156100b357600080fd5b506100bc610147565b005b3480156100ca57600080fd5b5061010d600480360360208110156100e157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610152565b604051808215151515815260200191505060405180910390f35b61013033610152565b151561013b57600080fd5b6101448161016f565b50565b610150336101c9565b565b600061016882600061022390919063ffffffff16565b9050919050565b6101838160006102b790919063ffffffff16565b8073ffffffffffffffffffffffffffffffffffffffff167f28b26e7a3d20aedbc5f8f2ebf7da671c0491723a2b78f47a097b0e46dee0714260405160405180910390a250565b6101dd81600061036790919063ffffffff16565b8073ffffffffffffffffffffffffffffffffffffffff167fe3f5ed5f263f1f01764a96edfc7d025f511ec5f7d180e8816908b78bcf74f09860405160405180910390a250565b60008073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff161415151561026057600080fd5b8260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102f357600080fd5b6102fd8282610223565b15151561030957600080fd5b60018260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156103a357600080fd5b6103ad8282610223565b15156103b857600080fd5b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550505056fea165627a7a723058200c1e53b8c4d7dffdd5e718e8717a54c5dadabdba074d9e1994b87bdbc8a370e30029",
@@ -2550,7 +2544,7 @@
     }
   },
   "schemaVersion": "3.0.0",
-  "updatedAt": "2019-02-28T12:14:03.018Z",
+  "updatedAt": "2019-02-28T20:21:19.112Z",
   "devdoc": {
     "methods": {}
   },

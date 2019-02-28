@@ -5,8 +5,7 @@
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "constructor",
-      "signature": "constructor"
+      "type": "constructor"
     },
     {
       "anonymous": false,
@@ -18,8 +17,7 @@
         }
       ],
       "name": "DistributorAdded",
-      "type": "event",
-      "signature": "0xddbf200aa634dc3fb81cfd68583dd1040d1c751d335e1d86b631bde3e977fea8"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -31,8 +29,7 @@
         }
       ],
       "name": "DistributorRemoved",
-      "type": "event",
-      "signature": "0x126174f6cf49c81cdb4a9214c6b8f037bef55b4ec31e4fc776cea2a1c8a88d59"
+      "type": "event"
     },
     {
       "constant": true,
@@ -51,8 +48,7 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function",
-      "signature": "0x8f0c86fa"
+      "type": "function"
     },
     {
       "constant": false,
@@ -66,8 +62,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x7250e224"
+      "type": "function"
     },
     {
       "constant": false,
@@ -76,8 +71,7 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x644241db"
+      "type": "function"
     }
   ],
   "bytecode": "0x608060405234801561001057600080fd5b506100293361002e640100000000026401000000009004565b6101e8565b61004f81600061009564010000000002610366179091906401000000009004565b8073ffffffffffffffffffffffffffffffffffffffff167fddbf200aa634dc3fb81cfd68583dd1040d1c751d335e1d86b631bde3e977fea860405160405180910390a250565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156100d157600080fd5b6100ea8282610154640100000000026401000000009004565b1515156100f657600080fd5b60018260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050565b60008073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff161415151561019157600080fd5b8260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b610442806101f76000396000f3fe608060405260043610610051576000357c010000000000000000000000000000000000000000000000000000000090048063644241db146100565780637250e2241461006d5780638f0c86fa146100be575b600080fd5b34801561006257600080fd5b5061006b610127565b005b34801561007957600080fd5b506100bc6004803603602081101561009057600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610132565b005b3480156100ca57600080fd5b5061010d600480360360208110156100e157600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610152565b604051808215151515815260200191505060405180910390f35b6101303361016f565b565b61013b33610152565b151561014657600080fd5b61014f816101c9565b50565b600061016882600061022390919063ffffffff16565b9050919050565b6101838160006102b790919063ffffffff16565b8073ffffffffffffffffffffffffffffffffffffffff167f126174f6cf49c81cdb4a9214c6b8f037bef55b4ec31e4fc776cea2a1c8a88d5960405160405180910390a250565b6101dd81600061036690919063ffffffff16565b8073ffffffffffffffffffffffffffffffffffffffff167fddbf200aa634dc3fb81cfd68583dd1040d1c751d335e1d86b631bde3e977fea860405160405180910390a250565b60008073ffffffffffffffffffffffffffffffffffffffff168273ffffffffffffffffffffffffffffffffffffffff161415151561026057600080fd5b8260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16905092915050565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156102f357600080fd5b6102fd8282610223565b151561030857600080fd5b60008260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff0219169083151502179055505050565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16141515156103a257600080fd5b6103ac8282610223565b1515156103b857600080fd5b60018260000160008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060006101000a81548160ff021916908315150217905550505056fea165627a7a723058204163037108b1a1e5c1e7545da0aeb516dc3dd8a1703508403ce3e684060631a80029",
@@ -2550,7 +2544,7 @@
     }
   },
   "schemaVersion": "3.0.0",
-  "updatedAt": "2019-02-28T12:14:03.032Z",
+  "updatedAt": "2019-02-28T20:21:19.105Z",
   "devdoc": {
     "methods": {}
   },

@@ -19,6 +19,7 @@
   "dependencies": {
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
     "openzeppelin-solidity": "^2.1.2",
     "truffle-hdwallet-provider": "^1.0.4"
   }
