@@ -2541,10 +2541,16 @@
       "links": {},
       "address": "0xd15837FeD033a30779514D820e7c9E9D1b70236b",
       "transactionHash": "0x87d2663ea24310124fea83414710e4d990e9e069607952a59dc00214ab47e483"
+    },
+    "1551354084228": {
+      "events": {},
+      "links": {},
+      "address": "0x6575BFD517A05bbd92b71551A1fe1205CaE94d4A",
+      "transactionHash": "0x87d2663ea24310124fea83414710e4d990e9e069607952a59dc00214ab47e483"
     }
   },
   "schemaVersion": "3.0.0",
-  "updatedAt": "2019-02-27T21:29:31.112Z",
+  "updatedAt": "2019-02-28T12:14:03.018Z",
   "devdoc": {
     "methods": {}
   },

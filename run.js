@@ -44,3 +44,7 @@ app.get('/retailer/', (req, res) => {
 app.get('/consumer/', (req, res) => { 
 	res.render('consumer');
 });
+
+app.get('/fetch/', (req, res) => { 
+	res.render('fetch');
+});

@@ -42,6 +42,18 @@
     vertical-align: top;
   }
 
+  .button {
+  padding: 5px 12px;
+  border: 0.5px solid lightgrey;
+  background-color: #fff;
+  display: inline-block;
+  }
+
+  .button:hover {
+  cursor: hand;
+  cursor: pointer;
+  }
+
   form {
     
   }
@@ -77,45 +89,1217 @@
 <div>
 <form>
 <h3>Buy</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="buySubmit">
+<input type="number" name="" class="buyUPC" placeholder="upc">
+<input type="number" name="" class="buyPrice" placeholder="price">
+<div class="button" id="buySubmit">Submit</div>
 </form>
 
 <form>
 <h3>Receive</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="receiveSubmit">
+<input type="text" name="" class="receiveUPC" placeholder="upc">
+<div class="button" id="receiveSubmit">Submit</div>
 </form>
 
 <form>
 <h3>Manufacture</h3>
-<input type="text" name="" class="upc" placeholder="upc">
+<input type="text" name="" class="manufactureUPC" placeholder="upc">
 <input type="text" name="" class="productNotes" placeholder="Product Notes">
-<input type="submit" name="" id="manufactureSubmit">
+<div class="button" id="manufactureSubmit">Submit</div>
 </form>
 
 <form>
 <h3>Package</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="packageSubmit">
+<input type="text" name="" class="packageUPC" placeholder="upc">
+<div class="button" id="packageSubmit">Submit</div>
 </form>
 </div>
 
 <div>
 <form>
 <h3>Sell</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="sellSubmit">
+<input type="text" name="" class="sellUPC" placeholder="upc">
+<input type="number" name="" class="price" placeholder="price in ETH">
+<div class="button" id="sellSubmit">Submit</div>
 </form>
 
 <form>
 <h3>Ship</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="shipSubmit">
+<input type="text" name="" class="shipUPC" placeholder="upc">
+<div class="button" id="shipSubmit">Submit</div>
 </form>
 </div>
 
 </div>
+
+<!-- Provide Web3 framework -->
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+
+<script>
+
+// Connect to Ethereum Network/Blockchain
+if (typeof web3 !== 'undefined') {
+  web3 = new Web3(web3.currentProvider);
+  console.log('We already have a provider.');
+} else {
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545")); 
+  console.log('We have set a new provider on Ganache chain at localhost:8454');
+}
+
+// Set the default account
+web3.eth.defaultAccount = web3.eth.accounts[0];
+console.log('Default account: ' + web3.eth.defaultAccount);
+
+// Provide the ABI to interact with the smart contract
+const SupplyChainContract = web3.eth.contract([
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addConsumer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "packageProduct",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isManufacturer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "packageLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "receiveProduct",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "kill",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellProductByDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isRetailer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addManufacturer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceConsumer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipProductByManufacturer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_originHarvesterID",
+        "type": "address"
+      },
+      {
+        "name": "_originHarvesterName",
+        "type": "string"
+      },
+      {
+        "name": "_originHarvesterInformation",
+        "type": "string"
+      },
+      {
+        "name": "_originHarvesterLatitude",
+        "type": "string"
+      },
+      {
+        "name": "_originHarvesterLongitude",
+        "type": "string"
+      },
+      {
+        "name": "_productNotes",
+        "type": "string"
+      }
+    ],
+    "name": "harvestLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "fetchItemBufferTwo",
+    "outputs": [
+      {
+        "name": "itemSKU",
+        "type": "uint256"
+      },
+      {
+        "name": "itemUPC",
+        "type": "uint256"
+      },
+      {
+        "name": "productID",
+        "type": "uint256"
+      },
+      {
+        "name": "productNotes",
+        "type": "string"
+      },
+      {
+        "name": "productNotesByManufacturer",
+        "type": "string"
+      },
+      {
+        "name": "productPrice",
+        "type": "uint256"
+      },
+      {
+        "name": "itemState",
+        "type": "uint8"
+      },
+      {
+        "name": "itemState2",
+        "type": "uint8"
+      },
+      {
+        "name": "manufacturerID",
+        "type": "address"
+      },
+      {
+        "name": "distributorID",
+        "type": "address"
+      },
+      {
+        "name": "retailerID",
+        "type": "address"
+      },
+      {
+        "name": "consumerID",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyProductByRetailer",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "fetchItemBufferOne",
+    "outputs": [
+      {
+        "name": "itemSKU",
+        "type": "uint256"
+      },
+      {
+        "name": "itemUPC",
+        "type": "uint256"
+      },
+      {
+        "name": "ownerID",
+        "type": "address"
+      },
+      {
+        "name": "originHarvesterID",
+        "type": "address"
+      },
+      {
+        "name": "originHarvesterName",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterInformation",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterLatitude",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterLongitude",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isConsumer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "processLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addRetailer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isDistributor",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addHarvester",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_manufacturerNotes",
+        "type": "string"
+      }
+    ],
+    "name": "manufactureProduct",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isHarvester",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipProductByDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "receiveLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceHarvester",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyProductByDistributor",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellProductByRetailer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceRetailer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceManufacturer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellProductByManufacturer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "purchase",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyLumber",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipProductByRetailer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Harvested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Processed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Packaged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ForSale",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Sold",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Shipped",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Received",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Manufactured",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "PackagedByManufacturer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ForSaleByManufacturer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "SoldByManufacturer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ShippedByManufacturer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ForSaleByDistributor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "SoldByDistributor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ShippedByDistributor",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ForSaleByRetailer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "Purchased",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ShippedByRetailer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReceivedByConsumer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "ConsumerAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "ConsumerRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "RetailerAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "RetailerRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "DistributorAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "DistributorRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "ManufacturerAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "ManufacturerRemoved",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "HarvesterAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "HarvesterRemoved",
+    "type": "event"
+  }
+]);
+
+// Connect to the smart contract by providing its ethereum address
+const SupplyChain = SupplyChainContract.at('0x5a239199a763928D41a656F828D220A8D9042338');
+
+/* ============================================================================================================================
+=========== Starting actual functionality =====================================================================================
+============================================================================================================================ */
+
+// Process Item
+const buyLumber = () => { SupplyChain.buyLumber($('.buyUPC').val(), {value: web3.toWei($('.buyPrice').val())}, async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully bought the item. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+// Package Item
+const receiveLumber = () => { SupplyChain.receiveLumber($('.receiveUPC').val(), async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully received the item. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+// Package Item
+const manufactureProduct = () => { SupplyChain.manufactureProduct($('.manufactureUPC').val(), $('.productNotes').val(), async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully manufactured the product. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+// Package Item
+const packageProduct = () => { SupplyChain.packageProduct($('.packageUPC').val(), async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully packaged the product. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+// Sell Item
+const sellProduct = () => { SupplyChain.sellProductByManufacturer($('.sellUPC').val(), web3.toWei($('.price').val()), async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully sold the product. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+// Ship Item
+const shipProduct = () => { SupplyChain.shipProductByManufacturer($('.shipUPC').val(), async function(error, result) {
+  if (error) {
+    return error;
+  } else { 
+    alert('You have successfully shipped the product. You can fetch item information on the /fetch/ page.');
+  }
+})};
+
+$('#buySubmit').click( function() {
+  buyLumber();
+})
+
+$('#receiveSubmit').click( function() {
+  receiveLumber();
+})
+
+$('#manufactureSubmit').click( function() {
+  manufactureProduct();
+})
+
+$('#packageSubmit').click( function() {
+  packageProduct();
+})
+
+$('#sellSubmit').click( function() {
+  sellProduct();
+})
+
+$('#shipSubmit').click( function() {
+  shipProduct();
+})
+
+</script>
 
 </body>
 

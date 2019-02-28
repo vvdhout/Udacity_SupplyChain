@@ -84,21 +84,43 @@
   </ul>
 </div>
 
-<h1>Consumer</h1>
+<h1>Distributor</h1>
 
 <div>
 <form>
-<h3>Purchase</h3>
-<input type="number" name="" class="purchaseUPC" placeholder="upc">
-<input type="number" name="" class="purchasePrice" placeholder="price">
-<div class="button" id="purchaseSubmit">Submit</div>
+<h3>Fetch Item Buffer One</h3>
+<input type="number" name="" class="fetch1UPC" placeholder="upc">
+<div class="button" id="fetchItem1Submit">Submit</div>
 </form>
 
 <form>
-<h3>Receive</h3>
-<input type="number" name="" class="receiveUPC" placeholder="upc">
-<div class="button" id="receiveSubmit">Submit</div>
+<h3>Fetch Item Buffer Two</h3>
+<input type="number" name="" class="fetch2UPC" placeholder="upc">
+<div class="button" id="fetchItem2Submit">Submit</div>
 </form>
+
+</div>
+
+<div class="data">
+<p id="itemSKU"></p>
+<p id="itemUPC"></p>
+<p id="productID"></p>
+<p id="productNotes"></p>
+<p id="productNotesByManufacturer"></p>
+<p id="productPrice"></p>
+<p id="itemState"></p>
+<p id="itemState2"></p>
+<p id="manufacturerID"></p>
+<p id="distributorID"></p>
+<p id="retailerID"></p>
+<p id="consumerID"></p><br><br>
+<p id="ownerID"></p>
+<p id="originHarvesterID"></p>
+<p id="originHarvesterName"></p>
+<p id="originHarvesterInformation"></p>
+<p id="originHarvesterLatitude"></p>
+<p id="originHarvesterLongitude"></p>
+
 
 </div>
 
@@ -1194,32 +1216,123 @@ const SupplyChain = SupplyChainContract.at('0x5a239199a763928D41a656F828D220A8D9
 =========== Starting actual functionality =====================================================================================
 ============================================================================================================================ */
 
-
-// Purchase Item
-const purchaseProduct = () => { SupplyChain.purchase($('.purchaseUPC').val(), {value: web3.toWei($('.purchasePrice').val())}, async function(error, result) {
+// Fetch Item1
+const FetchItem1 = () => { SupplyChain.fetchItemBufferOne($('.fetch1UPC').val(), function(error, result) {
   if (error) {
     return error;
   } else { 
-    alert('You have successfully processed the item. You can fetch item information on the /fetch/ page.');
+  $('.data p').text("");
+    $('.data #itemSKU').text(result[0]);
+    $('.data #itemUPC').text(result[1]);
+    $('.data #ownerID').text(result[2]);
+    $('.data #originHarvesterID').text(result[3]);
+    $('.data #originHarvesterInformation').text(result[4]);
+    $('.data #originHarvesterLatitude').text(result[5]);
+    $('.data #originHarvesterLongitude').text(result[6])
   }
 })};
 
-// Receive Item
-const receiveProduct = () => { SupplyChain.receiveProduct($('.receiveUPC').val(), async function(error, result) {
+// Fetch Item2
+const FetchItem2 = () => { SupplyChain.fetchItemBufferTwo($('.fetch2UPC').val(), function(error, result) {
   if (error) {
     return error;
   } else { 
-    alert('You have successfully shipped the item. You can fetch item information on the /fetch/ page.');
+  $('.data p').text("");
+    $('.data #itemSKU').text(result[0]);
+    $('.data #itemUPC').text(result[1]);
+    $('.data #productID').text(result[2]);
+    $('.data #productNotes').text(result[3]);
+    $('.data #productNotesByManufacturer').text(result[4]);
+    $('.data #productPrice').text(result[5]);
+    $('.data #manufacturerID').text(result[8]);
+    $('.data #distributorID').text(result[9]);
+    $('.data #retailerID').text(result[10]);
+    $('.data #consumerID').text(result[10]);
+    let State = "";
+    let MaterialState = "";
+
+    if (result[7] == 1) {
+      MaterialState = "Product";
+    } else {
+    MaterialState = "Lumber"
+    }
+
+    switch (Number(result[6])) {
+      case 0:
+      State = "Harvested";  
+      break;                
+      case 1:
+      State = "Processed";
+      break;             
+      case 2:
+      State = "Packaged";    
+      break;            
+      case 3:
+      State = "ForSale";    
+      break;              
+      case 4:
+      State = "Sold";     
+      break;            
+      case 5:
+      State = "Shipped";    
+      break;             
+      case 6:
+      State = "Received";  
+      break;               
+      case 7:
+      State = "Manufactured";  
+      break;         
+      case 8:
+      State = "PackagedByManufacturer"; 
+      break;   
+      case 9:
+      State = "ForSaleByManufacturer";  
+      break;    
+      case 10:
+      State = "SoldByManufacturer";    
+      break;     
+      case 11:
+      State = "ShippedByManufacturer";   
+      break;  
+      case 12:
+      State = "ForSaleByDistributor";
+      break;       
+      case 13:
+      State = "SoldByDistributor"; 
+      break;        
+      case 14:
+      State = "ShippedByDistributor";  
+      break;   
+      case 15:
+      State = "ForSaleByRetailer";    
+      break;    
+      case 16:
+      State = "Purchased";   
+      break;            
+      case 17:
+      State = "ShippedByRetailer";  
+      break;      
+      case 18:
+      State = "ReceivedByConsumer"; 
+      break;  
+      default:
+      State = "Harvested";
+    }
+
+    $('.data #itemState').text(State);
+    $('.data #itemState2').text(MaterialState);
   }
 })};
 
-$('#receiveSubmit').click( function() {
-  receiveProduct();
+
+$('#fetchItem1Submit').click( function() {
+  FetchItem1();
 })
 
-$('#purchaseSubmit').click( function() {
-  purchaseProduct();
+$('#fetchItem2Submit').click( function() {
+  FetchItem2();
 })
+
 
 </script>
 
