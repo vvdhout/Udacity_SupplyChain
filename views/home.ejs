@@ -25,7 +25,16 @@
   padding: 20px 5%;
   }
 
-  .container div {
+  .container .nav ul {
+    list-style: none;
+  }
+
+  .container .nav li {
+    display: inline-block;
+    margin-right: 45px;
+  }
+
+  .container div:not(.nav) {
   width: 48%;
     padding: 20px;
     box-sizing: border-box;
@@ -53,47 +62,19 @@
 
 <div class="container">
 
-<h1>Harvester</h1>
-
-<div>
-<form>
-<h3>Harvest</h3>
-<input type="text" name="upc" class="upc" placeholder="upc">
-<input type="text" name="harvesterID" class="harvesterID" placeholder="Harvester Id">
-<input type="text" name="harvesterName" class="harvesterName" placeholder="Harvester Name ">
-<input type="text" name="harvesterInformation" class="harvesterInformation" placeholder="Harvester Information">
-<input type="text" name="latitude" class="latitude" placeholder="Latitude">
-<input type="text" name="longitude" class="longitude" placeholder="Longitude">
-<input type="text" name="productNotes" class="productNotes" placeholder="Product Notes">
-<input type="submit" name="">
-</form>
+<div class="nav">
+  <ul>
+    <a href="/harvester/"><li>Harvester</li></a>
+    <a href="/manufacturer/"><li>Manufacturer</li></a>
+    <a href="/distributor/"><li>Distributor</li></a>
+    <a href="/retailer/"><li>Retailer</li></a>
+    <a href="/consumer/"><li>Consumer</li></a>
+  </ul>
 </div>
 
-<div>
-<form>
-<h3>Process</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="processSubmit">
-</form>
+<h1>Lumber Supply Chain</h1>
+<p>Use one of the navigation links up top to open up functionality.</p>
 
-<form>
-<h3>Package</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="packageSubmit">
-</form>
-
-<form>
-<h3>Sell</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="sellSubmit">
-</form>
-
-<form>
-<h3>Ship</h3>
-<input type="text" name="" class="upc" placeholder="upc">
-<input type="submit" name="" id="shipSubmit">
-</form>
-</div>
 
 </div>
 

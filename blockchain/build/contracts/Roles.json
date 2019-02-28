@@ -207,10 +207,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "370:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -333,10 +333,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "473:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -648,10 +648,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "774:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -758,10 +758,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "869:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1073,10 +1073,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "1175:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1480,10 +1480,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "370:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1606,10 +1606,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "473:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1921,10 +1921,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "774:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2031,10 +2031,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "869:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2346,10 +2346,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        2921,
-                        2922
+                        2934,
+                        2935
                       ],
-                      "referencedDeclaration": 2921,
+                      "referencedDeclaration": 2934,
                       "src": "1175:7:13",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2559,7 +2559,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.0",
-  "updatedAt": "2019-02-27T11:09:17.813Z",
+  "updatedAt": "2019-02-27T21:29:26.084Z",
   "devdoc": {
     "details": "Library for managing addresses assigned to a Role.\r",
     "methods": {},
