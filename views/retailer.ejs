@@ -81,6 +81,7 @@
     <a href="/distributor/"><li>Distributor</li></a>
     <a href="/retailer/"><li>Retailer</li></a>
     <a href="/consumer/"><li>Consumer</li></a>
+    <a href="/consumer/"><li style="margin-left: 30px;">Fetch Item</li></a>
   </ul>
 </div>
 
@@ -148,139 +149,28 @@ const SupplyChainContract = web3.eth.contract([
     "constant": false,
     "inputs": [
       {
-        "name": "_upc",
-        "type": "uint256"
+        "name": "account",
+        "type": "address"
       }
     ],
-    "name": "packageProduct",
+    "name": "addDistributor",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "constant": true,
+    "constant": false,
     "inputs": [
       {
         "name": "account",
         "type": "address"
       }
     ],
-    "name": "isManufacturer",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "packageLumber",
+    "name": "addHarvester",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "shipLumber",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "receiveProduct",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      },
-      {
-        "name": "_price",
-        "type": "uint256"
-      }
-    ],
-    "name": "sellLumber",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "kill",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      },
-      {
-        "name": "_price",
-        "type": "uint256"
-      }
-    ],
-    "name": "sellProductByDistributor",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "isRetailer",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -299,17 +189,13 @@ const SupplyChainContract = web3.eth.contract([
   },
   {
     "constant": false,
-    "inputs": [],
-    "name": "renounceConsumer",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [],
-    "name": "renounceDistributor",
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "addRetailer",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -323,10 +209,38 @@ const SupplyChainContract = web3.eth.contract([
         "type": "uint256"
       }
     ],
-    "name": "shipProductByManufacturer",
+    "name": "buyLumber",
     "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyProductByDistributor",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyProductByRetailer",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -368,255 +282,9 @@ const SupplyChainContract = web3.eth.contract([
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "fetchItemBufferTwo",
-    "outputs": [
-      {
-        "name": "itemSKU",
-        "type": "uint256"
-      },
-      {
-        "name": "itemUPC",
-        "type": "uint256"
-      },
-      {
-        "name": "productID",
-        "type": "uint256"
-      },
-      {
-        "name": "productNotes",
-        "type": "string"
-      },
-      {
-        "name": "productNotesByManufacturer",
-        "type": "string"
-      },
-      {
-        "name": "productPrice",
-        "type": "uint256"
-      },
-      {
-        "name": "itemState",
-        "type": "uint8"
-      },
-      {
-        "name": "itemState2",
-        "type": "uint8"
-      },
-      {
-        "name": "manufacturerID",
-        "type": "address"
-      },
-      {
-        "name": "distributorID",
-        "type": "address"
-      },
-      {
-        "name": "retailerID",
-        "type": "address"
-      },
-      {
-        "name": "consumerID",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "constant": false,
     "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "addDistributor",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "buyProductByRetailer",
-    "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "fetchItemBufferOne",
-    "outputs": [
-      {
-        "name": "itemSKU",
-        "type": "uint256"
-      },
-      {
-        "name": "itemUPC",
-        "type": "uint256"
-      },
-      {
-        "name": "ownerID",
-        "type": "address"
-      },
-      {
-        "name": "originHarvesterID",
-        "type": "address"
-      },
-      {
-        "name": "originHarvesterName",
-        "type": "string"
-      },
-      {
-        "name": "originHarvesterInformation",
-        "type": "string"
-      },
-      {
-        "name": "originHarvesterLatitude",
-        "type": "string"
-      },
-      {
-        "name": "originHarvesterLongitude",
-        "type": "string"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "isConsumer",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "processLumber",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "owner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "addRetailer",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "isDistributor",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "isOwner",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "addHarvester",
+    "name": "kill",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -641,22 +309,17 @@ const SupplyChainContract = web3.eth.contract([
     "type": "function"
   },
   {
-    "constant": true,
+    "constant": false,
     "inputs": [
       {
-        "name": "account",
-        "type": "address"
+        "name": "_upc",
+        "type": "uint256"
       }
     ],
-    "name": "isHarvester",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "name": "packageLumber",
+    "outputs": [],
     "payable": false,
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -667,10 +330,38 @@ const SupplyChainContract = web3.eth.contract([
         "type": "uint256"
       }
     ],
-    "name": "shipProductByDistributor",
+    "name": "packageProduct",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "processLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "purchase",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -689,6 +380,38 @@ const SupplyChainContract = web3.eth.contract([
   },
   {
     "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "receiveProduct",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceConsumer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
     "inputs": [],
     "name": "renounceHarvester",
     "outputs": [],
@@ -698,31 +421,17 @@ const SupplyChainContract = web3.eth.contract([
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      }
-    ],
-    "name": "buyProductByDistributor",
+    "inputs": [],
+    "name": "renounceManufacturer",
     "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "name": "_upc",
-        "type": "uint256"
-      },
-      {
-        "name": "_price",
-        "type": "uint256"
-      }
-    ],
-    "name": "sellProductByRetailer",
+    "inputs": [],
+    "name": "renounceOwnership",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -739,8 +448,35 @@ const SupplyChainContract = web3.eth.contract([
   },
   {
     "constant": false,
-    "inputs": [],
-    "name": "renounceManufacturer",
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellLumber",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "sellProductByDistributor",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -770,12 +506,16 @@ const SupplyChainContract = web3.eth.contract([
       {
         "name": "_upc",
         "type": "uint256"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
       }
     ],
-    "name": "purchase",
+    "name": "sellProductByRetailer",
     "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -786,10 +526,38 @@ const SupplyChainContract = web3.eth.contract([
         "type": "uint256"
       }
     ],
-    "name": "buyLumber",
+    "name": "shipLumber",
     "outputs": [],
-    "payable": true,
-    "stateMutability": "payable",
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipProductByDistributor",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "shipProductByManufacturer",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1190,11 +958,244 @@ const SupplyChainContract = web3.eth.contract([
     ],
     "name": "HarvesterRemoved",
     "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "fetchItemBufferOne",
+    "outputs": [
+      {
+        "name": "itemSKU",
+        "type": "uint256"
+      },
+      {
+        "name": "itemUPC",
+        "type": "uint256"
+      },
+      {
+        "name": "ownerID",
+        "type": "address"
+      },
+      {
+        "name": "originHarvesterID",
+        "type": "address"
+      },
+      {
+        "name": "originHarvesterName",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterInformation",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterLatitude",
+        "type": "string"
+      },
+      {
+        "name": "originHarvesterLongitude",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_upc",
+        "type": "uint256"
+      }
+    ],
+    "name": "fetchItemBufferTwo",
+    "outputs": [
+      {
+        "name": "itemSKU",
+        "type": "uint256"
+      },
+      {
+        "name": "itemUPC",
+        "type": "uint256"
+      },
+      {
+        "name": "productID",
+        "type": "uint256"
+      },
+      {
+        "name": "productNotes",
+        "type": "string"
+      },
+      {
+        "name": "productNotesByManufacturer",
+        "type": "string"
+      },
+      {
+        "name": "productPrice",
+        "type": "uint256"
+      },
+      {
+        "name": "itemState",
+        "type": "uint8"
+      },
+      {
+        "name": "itemState2",
+        "type": "uint8"
+      },
+      {
+        "name": "manufacturerID",
+        "type": "address"
+      },
+      {
+        "name": "distributorID",
+        "type": "address"
+      },
+      {
+        "name": "retailerID",
+        "type": "address"
+      },
+      {
+        "name": "consumerID",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isConsumer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isDistributor",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isHarvester",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isManufacturer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "isOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "isRetailer",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   }
 ]);
 
 // Connect to the smart contract by providing its ethereum address
-const SupplyChain = SupplyChainContract.at('0x5a239199a763928D41a656F828D220A8D9042338');
+const SupplyChain = SupplyChainContract.at('0x55303749064bd75ab5fd04cd0b5fe74725382f74');
 
 /* ============================================================================================================================
 =========== Starting actual functionality =====================================================================================

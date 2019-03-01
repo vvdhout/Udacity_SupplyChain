@@ -387,7 +387,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit Received(_upc); 
   }
   
-  // Manufacture the item y mananufacturer
+  // Manufacture the product by mananufacturer
   function manufactureProduct(uint _upc, string memory _manufacturerNotes) public
   // Call modifier to check if upc has passed previous supply chain stage
   received(_upc)
@@ -405,7 +405,7 @@ contract SupplyChain is AccessControl, Ownable {
       emit Manufactured(_upc);
   }
   
-  // Define a function 'packItem' that allows a farmer to mark an item 'Packed'
+  // Allow packaging of product by Manufacturer
   function packageProduct(uint _upc) public 
   // Call modifier to check if upc has passed previous supply chain stage
   manufactured(_upc)
@@ -422,7 +422,7 @@ contract SupplyChain is AccessControl, Ownable {
   }
   
  
-  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  // Allow selling of product by Manufacturer
   function sellProductByManufacturer(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   packagedByManufacturer(_upc)
@@ -439,7 +439,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit ForSaleByManufacturer(_upc);
   }
 
-  // Define a function 'buyItem' that allows the disributor to mark an item 'Sold'
+  // Define a function 'buyProduct' that allows the distributor
   // Use the above defined modifiers to check if the item is available for sale, if the buyer has paid enough, 
   // and any excess ether sent is refunded back to the buyer
   function buyProductByDistributor(uint _upc) public payable 
@@ -463,7 +463,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit SoldByManufacturer(_upc);
   }
 
-  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Allow shipping of product by Manufacturer
   // Use the above modifers to check if the item is sold
   function shipProductByManufacturer(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
@@ -481,7 +481,7 @@ contract SupplyChain is AccessControl, Ownable {
   }
   
   
-  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  // Allow selling of product by distributor
   function sellProductByDistributor(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   shippedByManufacturer(_upc)
@@ -498,7 +498,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit ForSaleByDistributor(_upc);
   }
 
-  // Define a function 'buyItem' that allows the disributor to mark an item 'Sold'
+  // Allow buying of product by retailer
   // Use the above defined modifiers to check if the item is available for sale, if the buyer has paid enough, 
   // and any excess ether sent is refunded back to the buyer
   function buyProductByRetailer(uint _upc) public payable 
@@ -522,7 +522,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit SoldByDistributor(_upc);
   }
 
-  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Allow shipping of product by distributor
   // Use the above modifers to check if the item is sold
   function shipProductByDistributor(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
@@ -539,7 +539,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit ShippedByDistributor(_upc);
   }
   
-  // Define a function 'sellItem' that allows a farmer to mark an item 'ForSale'
+  // Allow selling of product by retailer
   function sellProductByRetailer(uint _upc, uint _price) public 
   // Call modifier to check if upc has passed previous supply chain stage
   shippedByDistributor(_upc)
@@ -556,7 +556,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit ForSaleByRetailer(_upc);
   }
 
-  // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
+  // Define a function 'purchase' that allows the consumer to mark an item 'Purchased'
   // Use the above modifiers to check if the item is received
   function purchase(uint _upc) public payable
     // Call modifier to check if upc has passed previous supply chain stage
@@ -580,7 +580,7 @@ contract SupplyChain is AccessControl, Ownable {
     
   }
   
-  // Define a function 'shipItem' that allows the distributor to mark an item 'Shipped'
+  // Allow shippinh of product by retailer
   // Use the above modifers to check if the item is sold
   function shipProductByRetailer(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
@@ -597,7 +597,7 @@ contract SupplyChain is AccessControl, Ownable {
     emit ShippedByRetailer(_upc);
   }
   
-  // Define a function 'receiveItem' that allows the manufacturer to mark an item 'Received'
+  // Allow receiving of product by consumer
   // Use the above modifiers to check if the item is shipped
   function receiveProduct(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage

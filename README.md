@@ -12,9 +12,25 @@ In the /diagrams/ folder you will find the following UML diagrams:
 
 ## Libraries
 
-We will not be using any libraries.
+We use the Roles library which allows simple creation and management of different roles, and then provide access controls for these.
 
 ## IPFS
 
 We will not be using IPFS as a storage mechanism as of now.
 
+## Contract
+
+Address: 0x55303749064bd75ab5fd04cd0b5fe74725382f74
+
+## Versions
+
+Solidity: v0.5.1
+Truffle: v5
+Web3.js: v1.0
+
+## Running the application
+
+```
+node run.js
+```
+Go to http://localhost:8000/ and interact with the contract. Only the owner of the contract can set roles which can operate the supply chain.

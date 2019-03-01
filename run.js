@@ -21,7 +21,7 @@ app.use(express.static(__dirname + '/'));
 
 // Calling the home.ejs file from the views folder when on /
 app.get('/', (req, res) => { 
-	res.render('home');
+	res.render('fetch');
 });
 
 // Calling role file to allow functionality
