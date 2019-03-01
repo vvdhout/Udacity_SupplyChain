@@ -1,4 +1,4 @@
-# Architect a Supply Chain: Part A - Lumber Supply Chain
+# Architect a Supply Chain: Part B - Lumber Supply Chain
 
 This repository holds all the files that consitute our blockchain-based supply chain solution for the lumber industry. We will build an application using the Ethereum blockchain for storage of data and smart contract functionality that can be used to track and transfer ownership of lumber and lumber products when moving along the supply chain from harvester all the way to the end consumer.
 
